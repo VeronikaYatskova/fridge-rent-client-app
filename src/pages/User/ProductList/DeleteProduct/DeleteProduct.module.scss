@@ -1,0 +1,25 @@
+@import '../../../../components/mixins.scss';
+
+.modalForm {
+    background-color: #FFFFFF;
+    width: 556px;
+    height: 452px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+
+    .buttons {
+        margin-top: 54px;
+        display: flex;
+        width: 474px;
+        justify-content: space-between;
+        
+        button {
+            @include blueButton;
+            width: 164px;
+            height: 65px;
+        }
+    }
+}

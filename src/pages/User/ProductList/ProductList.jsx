@@ -1,12 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { EditProduct } from './EditProduct';
-import { AddProduct } from './AddProduct';
+import React, { useContext, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
-import scss from './ProductList.module.scss'
+import { EditProduct } from './EditProduct';
+import { AddProduct } from './AddProduct';
+import { DeleteProduct } from './DeleteProduct';
+
+import scss from './ProductList.module.scss';
+
 import { PushMessagesContext } from '../../../contexts';
 import { useParams } from 'react-router-dom';
-import { fetchProductsInFridge, fetchRemoveProductFromFridge } from '../../../redux';
+import { fetchProductsInFridge } from '../../../redux';
 
 export const ProductList = () => {
 
@@ -29,11 +32,6 @@ export const ProductList = () => {
     const [editProductModalView, setEditProductModalView] = useState(false);
     const [deleteProductModalView, setDeleteProductModalView] = useState(false);
     const [productId, setProductId] = useState('');
-
-    const handleProductDelete = () => {
-        dispatch(fetchRemoveProductFromFridge({ token, fridgeId: fridgeGuid, productId: selectedProduct}));
-        setDeleteProductModalView(false);
-    }
 
     const handleOpenModalAddNewProduct = () => {
         setNewProductModalView((currentValue) => !currentValue);
@@ -103,13 +101,7 @@ export const ProductList = () => {
         {
             deleteProductModalView &&
             <div className={scss.modalWindow} onClick={(e) => handleCloseModalWindow(e)}>
-                <div className={scss.modalForm}>
-                    <div>Вы уверены?</div>
-                    <div className={scss.buttons}>
-                        <button onClick={() => handleProductDelete()}>Да</button>
-                        <button onClick={(e) => handleCloseModalWindow(e)}>Отмена</button>
-                    </div>
-                </div>
+                <DeleteProduct fridgeGuid={fridgeGuid} selectedProduct={selectedProduct} setDeleteProductModalView={setDeleteProductModalView} handleCloseModalWindow={handleCloseModalWindow}/>
             </div>
         }
     </div> 

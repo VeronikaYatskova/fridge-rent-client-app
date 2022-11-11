@@ -19,28 +19,32 @@ export const Main = () => {
         dispatch(fetchRentFridge({ token, fridgeId }));
     }
 
-    return (<div className={scss.wrapper}>
-        <h1 className={ scss.title }>Доступные холодильники</h1>
-        <table className={scss.table_fridge}>
-            <thead>
-                <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Модель</th>
-                <th scope="col">Владелец</th>
-                <th scope="col">Производитель</th>
-                <th></th>
-                </tr>
-            </thead>
-            {
-                availableFridges.map(item => 
-                <tr>
-                    <th scope="row">{item.id}</th>
-                    <td>{item.model}</td>
-                    <td>{item.owner}</td>
-                    <td>{item.producer}</td>
-                    <td><button onClick={() => handleClickRentFridge(item.id)}>Арендовать</button></td>
-                </tr>)
-            }
-        </table>
-    </div>)
+        return (<div className={scss.wrapper}>
+                <h1 className={ scss.title }>Доступные холодильники</h1>
+                    <table className={scss.table_fridge}>
+                        <thead>
+                            <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Модель</th>
+                            <th scope="col">Владелец</th>
+                            <th scope="col">Производитель</th>
+                            <th></th>
+                            </tr>
+                        </thead>
+                        {
+                            availableFridges.map(item => 
+                            <tr>
+                                <th scope="row">{item.id}</th>
+                                <td>{item.model}</td>
+                                <td>{item.owner}</td>
+                                <td>{item.producer}</td>
+                                <td><button onClick={() => handleClickRentFridge(item.id)}>Арендовать</button></td>
+                            </tr>)
+                        }
+                        
+                    </table>
+                    {
+                        availableFridges.length === 0 && <h1 style={{ textAlign: 'center' }} className={ scss.title }>Доступных холодильников нет...</h1>
+                    }
+                </div>)
 }
