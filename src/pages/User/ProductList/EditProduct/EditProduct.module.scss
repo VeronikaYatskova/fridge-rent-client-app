@@ -1,0 +1,51 @@
+@import '../../../../components/mixins.scss';
+
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+    height: 350px;
+    background-color: #FFFFFF;
+
+    .inputText {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        background: #D3D3D3;
+        border-radius: 5px;
+        width: 470px;
+        height: 48px;
+
+        input, select {
+            margin-left: 14px;
+            background:  transparent;
+            border: none;
+            outline: none;
+            width: 440px;
+
+            @include fontStyle;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 20px;
+            display: flex;
+            color: #000000;    
+        }
+    }
+
+    .formButton {
+        margin-top: 14px;
+        width: 100px;
+        display: flex;
+
+        button {
+            width: 180px;
+            height: 54px;
+            font-size: 20px;   
+
+            @include blueButton;    
+        }
+
+    }
+}

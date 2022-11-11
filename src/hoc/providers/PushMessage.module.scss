@@ -1,0 +1,28 @@
+@import '../../components/mixins.scss';
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    margin: 5px 10px 5px 5px;
+    width: 98%;
+    height: 50px;
+    background-color: lightcoral;
+
+    
+
+    .text {
+        font-size: 26px;
+        color: black;
+    }
+
+    .cancel {
+        width: 100px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include blueButton;
+    }
+}

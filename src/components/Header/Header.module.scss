@@ -1,0 +1,51 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 66px;
+    background-color: #0D4383;
+
+    .logo {
+        width: 182px;
+        height: 30px;
+        margin-left: 26px;
+    }
+
+    .navigations {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-right: 28px;
+
+        width: 150px;
+        
+        .signin {
+            width: 36px;
+            height: 34px; 
+        }
+
+        .signout {
+            width: 36px;
+            height: 34px; 
+        }
+
+        .account {
+            margin-right: 18px;
+            width: 36px;
+            height: 34px; 
+        }
+
+        .profile {
+            width: 36px;
+            height: 34px; 
+        }
+
+        .about {
+            margin-right: 18px;
+            margin-left: auto;
+            width: 50px;
+            height: 50px; 
+        }
+    }
+}
