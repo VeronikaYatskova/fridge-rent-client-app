@@ -74,14 +74,13 @@ export const MainPage = () => {
                             <td><a onClick={() => handleClickReturn(item.id)}>Вернуть</a></td>
                         </tr>)
                     }
-                    {
-                        fridges.length === 0 && <h1 className={ scss.title }>У вас нет арендованных холодильников</h1>
-                    }
                 </table>
+                {
+                    fridges.length === 0 && <h1 className={ scss.title }>У вас нет арендованных холодильников</h1>
+                }
                 <h1>Кнопка добавляет продукт, в холодильники, где его нет</h1>
                 <button onClick={() => handleClick()}>Добавить</button>
             </div>
         </div>
     )
-    
 }

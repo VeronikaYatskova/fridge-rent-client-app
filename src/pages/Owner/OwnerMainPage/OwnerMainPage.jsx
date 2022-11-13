@@ -56,67 +56,54 @@ export const OwnerMainPage = () => {
         }
     }
 
-    if (fridges.length === 0) {
-        return (
-            <div className={scss.wrapper}>
-                {
-                    newFridgeModalView && 
-                    <div className={scss.modalWindow} onClick={(e) => handleCloseModal(e)}>
-                        <AddFridge/>
-                    </div>
-                }
-                <h1 className={ scss.title }>Доступных холодильников нет</h1>
+    return (<div className={scss.wrapper}>
+        {
+            isOpened && <RentInfo fridgeId={fridgeId} handleClose={handleClose} />
+        }
+        {
+            onDelete && <DeleteFridge fridgeId={fridgeId} handleDelete={handleDelete}/>
+        }
+        {
+            newFridgeModalView && 
+            <div className={scss.modalWindow} onClick={(e) => handleCloseModal(e)}>
+                <AddFridge handleCloseModal={handleCloseModal}/>
+            </div>
+        }
+        <div className={scss.content_wrapper}>
+            <div className={scss.title}>
+                <div className={ scss.text }>Ваши холодильники</div>
                 <button onClick={() => handleOpenModalNewFridge()}>Добавить холодильник</button>
             </div>
-        )
-    }
-    else {  
-        return (<div className={scss.wrapper}>
+            <table className={scss.table_fridge}>
+                <thead>
+                    <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Модель</th>
+                    <th scope="col">Статус</th>
+                    <th></th>
+                    </tr>
+                </thead>
+                {
+                    fridges.map(item => 
+                    <tr>
+                        <th>
+                            {item.id}
+                        </th>
+                        <td>{item.model}</td>
+                        <td className={scss.actions}>                             
+                            <div>{item.isRented ? 'Арендован': 'Свободен'}</div>
+                            <div className={scss.buttons}>
+                                <button onClick={() => handleReturn(item.id)} disabled={!item.isRented} style={{ opacity: !item.isRented ? '60%': '100%' }}>Детали</button>
+                                <button onClick={() => handleReturnDelete(item.id)} disabled={item.isRented} style={{ opacity: item.isRented ? '60%': '100%' }}>Удалить</button>
+                            </div>
+                        </td>
+                    </tr>)
+                }
+            </table>
             {
-                isOpened && <RentInfo fridgeId={fridgeId} handleClose={handleClose} />
+                fridges.length === 0 && <h1 style={{ textAlign: 'center' }} className={ scss.title }>У вас нет холодильников...</h1>
             }
-            {
-                onDelete && <DeleteFridge fridgeId={fridgeId} handleDelete={handleDelete}/>
-            }
-            {
-                newFridgeModalView && 
-                <div className={scss.modalWindow} onClick={(e) => handleCloseModal(e)}>
-                    <AddFridge/>
-                </div>
-            }
-            <div className={scss.content_wrapper}>
-                <div className={scss.title}>
-                    <div className={ scss.text }>Ваши холодильники</div>
-                    <button onClick={() => handleOpenModalNewFridge()}>Добавить холодильник</button>
-                </div>
-                <table className={scss.table_fridge}>
-                    <thead>
-                        <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Модель</th>
-                        <th scope="col">Статус</th>
-                        <th></th>
-                        </tr>
-                    </thead>
-                    {
-                        fridges.map(item => 
-                        <tr>
-                            <th>
-                                {item.id}
-                            </th>
-                            <td>{item.model}</td>
-                            <td className={scss.actions}>                             
-                                <div>{item.isRented ? 'Арендован': 'Свободен'}</div>
-                                <div className={scss.buttons}>
-                                    <button onClick={() => handleReturn(item.id)} disabled={!item.isRented} style={{ opacity: !item.isRented ? '60%': '100%' }}>Детали</button>
-                                    <button onClick={() => handleReturnDelete(item.id)} disabled={item.isRented} style={{ opacity: item.isRented ? '60%': '100%' }}>Удалить</button>
-                                </div>
-                            </td>
-                        </tr>)
-                    }
-                </table>
-            </div>
         </div>
-        )
-    }
+    </div>
+    )
 }

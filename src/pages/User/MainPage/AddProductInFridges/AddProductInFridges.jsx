@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import scss from './AddProductInFridges.module.scss'
-import { fetchAddProductToFridges, fetchAllProducts } from "../../../../redux";
+import { fetchStoredProcedureAddProductToFridges, fetchAllProducts } from "../../../../redux";
 
 export const AddProductInFridges = ({handleptaClickClose, setProductToAdd}) => {
     const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export const AddProductInFridges = ({handleptaClickClose, setProductToAdd}) => {
     }, [])
 
     const handleAddProductInFridges = () => {
-        dispatch(fetchAddProductToFridges({ productId, token }));
+        dispatch(fetchStoredProcedureAddProductToFridges({ productId, token }));
         setProductToAdd((currentValue) => !currentValue);
     }
 

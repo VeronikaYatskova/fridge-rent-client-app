@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import environment from '../../../env';
-import { getOwnersFridges, getFridgeRentInfo } from "../../actions";
+import { getOwnersFridges, getFridgeRentInfo, createRemoveFridgeAction } from "../../actions";
 
 export function fetchRemoveFridge({token, fridgeId}, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
@@ -13,6 +13,8 @@ export function fetchRemoveFridge({token, fridgeId}, errorCallback, successCallb
             const {data} = await axios.delete(path,{
                 headers: { Authorization: `bearer ${token}` }                
             })
+
+            dispatch(createRemoveFridgeAction({id: fridgeId}));
 
             if (successCallback) {
                 successCallback();
@@ -39,7 +41,7 @@ export function fetchAddFridge({token, modelId, producerId, capacity}, errorCall
                 headers: { Authorization: `bearer ${token}` }                
             })
 
-            console.log(data);
+            console.log(modelId, producerId);
             if (successCallback) {
                 successCallback();
             }

@@ -5,6 +5,9 @@ import { createSetFridgesAction,
          createUpdateProductCountAction,
          getAvailableFridgesAction, 
          getProductsInFridge,
+         createReturnFridgeAction,
+         createDeleteProductAction,
+         createRentFridgeAction,
          } from "../../actions";
 
 export function fetchProductUpdate({token, fridgeId, productId, count}, errorCallback, successCallback) {
@@ -47,6 +50,8 @@ export function fetchReturnFridge({token, fridgeId}, errorCallback, successCallb
                 headers: { Authorization: `bearer ${token}` }                
             })
 
+            dispatch(createReturnFridgeAction({ id: fridgeId }))
+
             if (successCallback) {
                 successCallback();
             }
@@ -67,6 +72,8 @@ export function fetchRemoveProductFromFridge({token, fridgeId, productId}, error
             const {data} = await axios.delete(path,{
                 headers: { Authorization: `bearer ${token}` }                
             })
+
+            dispatch(createDeleteProductAction({ id: productId }))
 
             if (successCallback) {
                 successCallback();
@@ -112,8 +119,6 @@ export function fetchAvailableFridges({ token }, errorCallback, successCallback)
                 headers: { Authorization: `bearer ${token}` }                
             })
 
-            console.log({ data });
-
             dispatch(getAvailableFridgesAction(data));
 
             if (successCallback) {
@@ -137,8 +142,7 @@ export function fetchProductsInFridge({ token, fridgeId }, errorCallback, succes
                 headers: { Authorization: `bearer ${token}` }                
             })
 
-            console.log({ data });
-
+            console.log(data);
             dispatch(getProductsInFridge(data));
 
             if (successCallback) {
@@ -152,7 +156,7 @@ export function fetchProductsInFridge({ token, fridgeId }, errorCallback, succes
     }
 }
 
-export function fetchAddProductToFridges({ token, productId }, errorCallback, successCallback) {
+export function fetchStoredProcedureAddProductToFridges({ token, productId }, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
     const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }products-in-fridge/product/${productId}/put-in-all-fridges`;
 
@@ -163,7 +167,40 @@ export function fetchAddProductToFridges({ token, productId }, errorCallback, su
                 headers: { Authorization: `bearer ${token}` }                
             })
 
-            console.log(data);
+            if (successCallback) {
+                successCallback();
+            }
+        } catch (error) {
+            if (errorCallback) {
+                errorCallback('Продукт не был добавлен');
+            }
+        }
+    }
+}
+
+export function fetchAddProductToFridge({token, fridgeId, productId ,count}, errorCallback, successCallback) {
+    const { host, port, prefix, protocol } = environment;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }products-in-fridge/product/new`;
+
+    return async (dispatch) => {
+        try {
+
+            const { data } = await axios.post(path, {
+                productId,
+                fridgeId,
+                count: Number(count)
+            },{
+                headers: { Authorization: `bearer ${token}` }                
+            })
+
+            // const newProduct = {
+            //     fridgeId: fridgeId,
+            //     productName: productName,
+            //     count: Number(count)
+            // }
+
+            // dispatch(createAddProductInFridgeAction(newProduct));
+
             if (successCallback) {
                 successCallback();
             }
@@ -186,7 +223,8 @@ export function fetchRentFridge({token, fridgeId}, errorCallback, successCallbac
                 headers: { Authorization: `bearer ${token}` }                
             })
 
-            console.log(data);
+            dispatch(createRentFridgeAction({ id: fridgeId }))
+
             if (successCallback) {
                 successCallback();
             }

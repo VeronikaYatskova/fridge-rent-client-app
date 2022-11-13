@@ -14,10 +14,7 @@ const useValidation = (value, validations) => {
        for (const validation in validations) {
            switch (validation) {
                 case 'minCount':
-                    value.length < validations[validation] ? setMinCounthError(true) : setMinCounthError(false);
-                    break;
-                case 'maxCount':
-                    value.length > validations[validation] ? setMaxCountError(true) : setMaxCountError(false);
+                    Number(value) < validations[validation] ? setMinCounthError(true) : setMinCounthError(false);
                     break;
                 case 'isEmpty':
                     value ? setEmpty(false) : setEmpty(true);
@@ -66,13 +63,16 @@ const useInput = (initialValue, validations) => {
 
 export const AddProduct = () => {
     const [productId, setProductId] = useState('')
+    // const [productName, setProductName] = useState('')
 
     const params = useParams();
+    const { fridgeId } = params
     const dispatch = useDispatch();
     const products = useSelector((state) => state.products.products);
+
     const token = useSelector((state) => state.auth.user?.token || '');
 
-    const count = useInput(0, {isEmpty: true, maxCount: 100, minCount: 20 });
+    const count = useInput(0, {isEmpty: true, minCount: 0 });
 
     useEffect(() => {
         dispatch(fetchAllProducts({ token }));
@@ -80,10 +80,12 @@ export const AddProduct = () => {
 
     const handleChange = (event) => {
         setProductId(event.target.value)
+
+        // const { name } = products.find(p => p.id == event.target.value);
+        // setProductName(name);
     }
 
     const handleClickAddProduct = () => {
-        const { fridgeId } = params
         const prodId = productId || products[0]?.id;
         dispatch(fetchAddProductToFridge({ count: count.value, fridgeId, productId: prodId, token }));
     }
@@ -98,11 +100,13 @@ export const AddProduct = () => {
                     }
                 </select>
             </div>
+            {(count.isDirty && count.isEmpty) && <div style={{color: 'red'}}>Поле не может быть пустым</div>}
+            {(count.isDirty && count.minCountError) && <div style={{color: 'red'}}>Значение должно быть больше либо равно нулю</div>}
             <div className={scss.inputText}>
                 <input onChange={e => count.onChange(e)} onBlur={e => count.onBlur(e)} value={count.value} type='number' name='count' placeholder='Количество'/>
             </div>
             <div className={scss.formButton}>
-                <button onClick={() => handleClickAddProduct()}>
+                <button disabled={ !count.inputValid } onClick={() => handleClickAddProduct()}>
                     Добавить
                 </button>
             </div>

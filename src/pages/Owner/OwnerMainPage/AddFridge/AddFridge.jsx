@@ -14,10 +14,10 @@ const useValidation = (value, validations) => {
        for (const validation in validations) {
            switch (validation) {
                 case 'minCount':
-                    value.length < validations[validation] ? setMinCounthError(true) : setMinCounthError(false);
+                    Number(value) < validations[validation] ? setMinCounthError(true) : setMinCounthError(false);
                     break;
                 case 'maxCount':
-                    value.length > validations[validation] ? setMaxCountError(true) : setMaxCountError(false);
+                    Number(value) > validations[validation] ? setMaxCountError(true) : setMaxCountError(false);
                     break;
                 case 'isEmpty':
                     value ? setEmpty(false) : setEmpty(true);
@@ -64,10 +64,10 @@ const useInput = (initialValue, validations) => {
     }
 }
 
-export const AddFridge = () => {
+export const AddFridge = ({handleCloseModal}) => {
     const [modelId, setModelId] = useState('')
     const [producerId, setProducerId] = useState('')
-    const capacity = useInput('')
+    const capacity = useInput(0, { minCount: 10, maxCount: 1000, isEmpty: '' })
 
     const dispatch = useDispatch();
     const token = useSelector((state) => state.auth.user?.token || '');
@@ -81,18 +81,18 @@ export const AddFridge = () => {
     }, [])
 
     const handleChangeModel = (event) => {
-        console.log(modelId)
         setModelId(event.target.value)
     }
 
     const handleChangeProducer = (event) => {
-        console.log(modelId)
         setProducerId(event.target.value)
     }
 
     const handleAddFridge = () => {
-        console.log(modelId, producerId, capacity.value);
-        dispatch(fetchAddFridge({token, modelId, producerId, capacity: capacity.value}))
+        const modId = modelId || models[0]?.id;
+        const prodId = producerId || producers[0]?.id;
+        
+        dispatch(fetchAddFridge({token, modelId: modId, producerId: prodId, capacity: capacity.value}))
     }
 
     return (
@@ -112,11 +112,14 @@ export const AddFridge = () => {
                     }
                 </select>
             </div>
+            {(capacity.isDirty && capacity.isEmpty) && <div style={{color: 'red'}}>Поле не должно быть пустым</div>}
+            {(capacity.isDirty && capacity.minCountError) && <div style={{color: 'red'}}>Количество должно быть больше десяти</div>}
+            {(capacity.isDirty && capacity.maxCountError) && <div style={{color: 'red'}}>Количество должно быть меньше тысячи</div>}
             <div className={scss.inputText}>
-                <input onChange={e => capacity.onChange(e)} value={capacity.value} type='number' name='capacity' placeholder='Максимальное количество продуктов'/>
+                <input onChange={e => capacity.onChange(e)} onBlur={e => capacity.onBlur(e)} value={capacity.value} type='number' name='capacity' placeholder='Максимальное количество продуктов'/>
             </div>
             <div className={scss.formButton}>
-                <button onClick={() => handleAddFridge()}>
+                <button disabled={ !capacity.inputValid } onClick={() => handleAddFridge()}>
                     Добавить
                 </button>
             </div>

@@ -1,4 +1,4 @@
-import { GET_OWNERS_FRIDGES, GET_FRIDGE_RENT_INFO } from '../../actions';
+import { GET_OWNERS_FRIDGES, GET_FRIDGE_RENT_INFO, REMOVE_FRIDGE } from '../../actions';
 
 const initialState = {
     fridges: [],
@@ -21,6 +21,15 @@ export const ownerFridgesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 rent_info: payload,
+            }
+        }
+
+        case REMOVE_FRIDGE: {
+            const { id } = payload;
+            const currentFridges = state.fridges.filter((fridge) => fridge.id !== id);
+            return {
+                ...state,
+                fridges: currentFridges
             }
         }
 

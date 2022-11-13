@@ -4,7 +4,7 @@ import { fetchFridgeRentInfo } from '../../../../redux';
 
 import scss from './RentInfo.module.scss';
 
-export const RentInfo = ({ fridgeId, handleClickClose }) => {
+export const RentInfo = ({ fridgeId, handleClose }) => {
 
     const dispatch = useDispatch();
     const token = useSelector((state) => state.auth.user?.token || '');
@@ -14,7 +14,7 @@ export const RentInfo = ({ fridgeId, handleClickClose }) => {
         dispatch(fetchFridgeRentInfo({ token, fridgeId }));
     }, []);
 
-    return (<div className={scss.modalWindow} onClick={(e) => handleClickClose(e)}>
+    return (<div className={scss.modalWindow} onClick={(e) => handleClose(e)}>
                 <div className={scss.modalForm}>
                     <h2>Договор аренды</h2>
                     <table className={scss.table_rent}>
@@ -43,7 +43,7 @@ export const RentInfo = ({ fridgeId, handleClickClose }) => {
                         </tbody>
                     </table>
                     <div className={scss.button_cancel}>
-                        <button onClick={(e) => handleClickClose(e)}>Закрыть</button>
+                        <button onClick={(e) => handleClose(e)}>Закрыть</button>
                     </div>
                 </div>
             </div>);
