@@ -3,10 +3,6 @@ import { createLoginAction, createRegistrationAction } from '../../actions';
 
 import environment from '../../../env';
 
-
-// veronika@owner.com 1
-// veronika@renter.com 1
-
 export const fetchLoginUser = ({ email, password, isOwner }, errorCallback, successCallback) => {
     const { host, port, prefix, protocol } = environment;
     const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }authorization/${ isOwner ? 'owner': 'user' }/login`;

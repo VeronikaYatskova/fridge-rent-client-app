@@ -3,8 +3,8 @@ import axios from "axios";
 import environment from '../../../env';
 import { createSetFridgesAction,
          createUpdateProductCountAction,
-         getAvailableFridgesAction, 
-         getProductsInFridge,
+         createGetAvailableFridgesAction, 
+         createGetProductsInFridgeAction,
          createReturnFridgeAction,
          createDeleteProductAction,
          createRentFridgeAction,
@@ -119,7 +119,7 @@ export function fetchAvailableFridges({ token }, errorCallback, successCallback)
                 headers: { Authorization: `bearer ${token}` }                
             })
 
-            dispatch(getAvailableFridgesAction(data));
+            dispatch(createGetAvailableFridgesAction(data));
 
             if (successCallback) {
                 successCallback();
@@ -143,7 +143,7 @@ export function fetchProductsInFridge({ token, fridgeId }, errorCallback, succes
             })
 
             console.log(data);
-            dispatch(getProductsInFridge(data));
+            dispatch(createGetProductsInFridgeAction(data));
 
             if (successCallback) {
                 successCallback();
@@ -192,14 +192,6 @@ export function fetchAddProductToFridge({token, fridgeId, productId ,count}, err
             },{
                 headers: { Authorization: `bearer ${token}` }                
             })
-
-            // const newProduct = {
-            //     fridgeId: fridgeId,
-            //     productName: productName,
-            //     count: Number(count)
-            // }
-
-            // dispatch(createAddProductInFridgeAction(newProduct));
 
             if (successCallback) {
                 successCallback();

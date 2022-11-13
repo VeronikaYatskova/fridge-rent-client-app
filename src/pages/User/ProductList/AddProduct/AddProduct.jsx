@@ -63,16 +63,15 @@ const useInput = (initialValue, validations) => {
 
 export const AddProduct = ({handleCloseModalWindow}) => {
     const [productId, setProductId] = useState('')
-    // const [productName, setProductName] = useState('')
 
     const params = useParams();
     const { fridgeId } = params
     const dispatch = useDispatch();
     const products = useSelector((state) => state.products.products);
-
     const token = useSelector((state) => state.auth.user?.token || '');
 
     const count = useInput(0, {isEmpty: true, minCount: 0 });
+    const [productDefaultQuantity, setProductDefaultQuantity] = useState(0);
 
     useEffect(() => {
         dispatch(fetchAllProducts({ token }));
@@ -80,14 +79,15 @@ export const AddProduct = ({handleCloseModalWindow}) => {
 
     const handleChange = (event) => {
         setProductId(event.target.value)
-
-        // const { name } = products.find(p => p.id == event.target.value);
-        // setProductName(name);
+        const product = products.find(p => p.id === event.target.value)
+        console.log(product.defaultQuantity)
+        setProductDefaultQuantity(Number(product.defaultQuantity));
     }
 
     const handleClickAddProduct = () => {
         const prodId = productId || products[0]?.id;
-        dispatch(fetchAddProductToFridge({ count: count.value, fridgeId, productId: prodId, token }));
+        const countOfProductToAdd = count.value === 0 ? productDefaultQuantity : count.value; 
+        dispatch(fetchAddProductToFridge({ count: countOfProductToAdd, fridgeId, productId: prodId, token }));
     }
 
     return (

@@ -16,14 +16,14 @@ export const createSetFridgesAction = (payload = []) => {
     }
 }
 
-export const getAvailableFridgesAction = (payload = []) => {
+export const createGetAvailableFridgesAction = (payload = []) => {
     return {
         type: GET_AVAILABLE_FRIDGES,
         payload
     }
 }
 
-export const getProductsInFridge = (payload = []) => {
+export const createGetProductsInFridgeAction = (payload = []) => {
     return {
         type: GET_PRODUCTS_IN_FRIDGE,
         payload
@@ -37,14 +37,14 @@ export const createRentFridgeAction = (payload) => {
     }
 }
 
-export const addProductInFridges = (payload) => {
+export const createSetProductInFridgesAction = (payload) => {
     return {
         type: ADD_PRODUCT_IN_ALL_FRIDGES,
         payload
     }
 }
 
-export const removeProductFromFridge = (payload) => {
+export const createRemoveProductFromFridgeAction = (payload) => {
     return {
         type: REMOVE_PRODUCT_FROM_FRIDGE,
         payload

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import environment from '../../../env';
-import { getAllProducts } from "../../actions";
+import { createGetAllProductsAction } from "../../actions";
 
 export function fetchAllProducts({token}, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
@@ -13,7 +13,7 @@ export function fetchAllProducts({token}, errorCallback, successCallback) {
                 headers: { Authorization: `bearer ${token}` }                
             })
 
-            dispatch(getAllProducts(data));
+            dispatch(createGetAllProductsAction(data));
 
             if (successCallback) {
                 successCallback();

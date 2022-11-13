@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import environment from '../../../env';
-import { getOwnersFridges, getFridgeRentInfo, createRemoveFridgeAction } from "../../actions";
+import { createGetOwnersFridgesAction, createGetFridgeRentInfoAction, createRemoveFridgeAction } from "../../actions";
 
 export function fetchRemoveFridge({token, fridgeId}, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
@@ -64,7 +64,7 @@ export function fetchAllOwnerFridges({token}, errorCallback, successCallback) {
                 headers: { Authorization: `bearer ${token}` }                
             })
 
-            dispatch(getOwnersFridges(data));
+            dispatch(createGetOwnersFridgesAction(data));
 
             if (successCallback) {
                 successCallback();
@@ -87,7 +87,7 @@ export function fetchFridgeRentInfo({token, fridgeId}, errorCallback, successCal
                 headers: { Authorization: `bearer ${token}` }                
             })
 
-            dispatch(getFridgeRentInfo(data));
+            dispatch(createGetFridgeRentInfoAction(data));
 
             if (successCallback) {
                 successCallback();
