@@ -1,13 +1,20 @@
 @import '../../../../components/mixins.scss';
 
+.modalWindow {
+    @include modalWindow;
 
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 500px;
-    height: 350px;
-    background-color: #FFFFFF;
+    .modalForm {
+        @include modalForm;
+
+        width: 500px;
+        height: 230px;
+        
+        button {
+            @include blueButton;
+            width: 130px;
+            height: 40px;
+        }
+    }
 
     .inputText {
         margin-bottom: 8px;
@@ -46,6 +53,8 @@
 
             @include blueButton;    
         }
-
     }
 }
+
+
+    

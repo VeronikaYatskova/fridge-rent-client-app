@@ -96,32 +96,34 @@ export const AddFridge = ({handleCloseModal}) => {
     }
 
     return (
-        <div className={scss.wrapper}>
-            <h1>Добавить новый холодильник</h1>
-            <div className={scss.inputText}>
-                <select onChange={ e => handleChangeModel(e)}>
-                    {   
-                        models.map((item) => <option value={item.id} key={item.id}>{ item.name }</option>)
-                    }
-                </select>
-            </div>
-            <div className={scss.inputText}>
-                <select onChange={e => handleChangeProducer(e)}>
-                    {   
-                        producers.map((item) => <option value={item.id} key={item.id}>{ item.name }</option>)
-                    }
-                </select>
-            </div>
-            {(capacity.isDirty && capacity.isEmpty) && <div style={{color: 'red'}}>Поле не должно быть пустым</div>}
-            {(capacity.isDirty && capacity.minCountError) && <div style={{color: 'red'}}>Количество должно быть больше десяти</div>}
-            {(capacity.isDirty && capacity.maxCountError) && <div style={{color: 'red'}}>Количество должно быть меньше тысячи</div>}
-            <div className={scss.inputText}>
-                <input onChange={e => capacity.onChange(e)} onBlur={e => capacity.onBlur(e)} value={capacity.value} type='number' name='capacity' placeholder='Максимальное количество продуктов'/>
-            </div>
-            <div className={scss.formButton}>
-                <button disabled={ !capacity.inputValid } onClick={() => handleAddFridge()}>
-                    Добавить
-                </button>
+        <div className={scss.modalWindow} onClick={(e) => handleCloseModal(e)}>
+            <div className={scss.modalForm}>
+                <h1>Добавить новый холодильник</h1>
+                <div className={scss.inputText}>
+                    <select onChange={ e => handleChangeModel(e)}>
+                        {   
+                            models.map((item) => <option value={item.id} key={item.id}>{ item.name }</option>)
+                        }
+                    </select>
+                </div>
+                <div className={scss.inputText}>
+                    <select onChange={e => handleChangeProducer(e)}>
+                        {   
+                            producers.map((item) => <option value={item.id} key={item.id}>{ item.name }</option>)
+                        }
+                    </select>
+                </div>
+                {(capacity.isDirty && capacity.isEmpty) && <div style={{color: 'red'}}>Поле не должно быть пустым</div>}
+                {(capacity.isDirty && capacity.minCountError) && <div style={{color: 'red'}}>Количество должно быть больше десяти</div>}
+                {(capacity.isDirty && capacity.maxCountError) && <div style={{color: 'red'}}>Количество должно быть меньше тысячи</div>}
+                <div className={scss.inputText}>
+                    <input onChange={e => capacity.onChange(e)} onBlur={e => capacity.onBlur(e)} value={capacity.value} type='number' name='capacity' placeholder='Максимальное количество продуктов'/>
+                </div>
+                <div className={scss.formButton}>
+                    <button disabled={ !capacity.inputValid } onClick={() => handleAddFridge()}>
+                        Добавить
+                    </button>
+                </div>
             </div>
         </div>
     )

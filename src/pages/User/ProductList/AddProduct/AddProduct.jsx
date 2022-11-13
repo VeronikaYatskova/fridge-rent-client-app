@@ -61,7 +61,7 @@ const useInput = (initialValue, validations) => {
     }
 }
 
-export const AddProduct = () => {
+export const AddProduct = ({handleCloseModalWindow}) => {
     const [productId, setProductId] = useState('')
     // const [productName, setProductName] = useState('')
 
@@ -91,24 +91,26 @@ export const AddProduct = () => {
     }
 
     return (
-        <div className={scss.wrapper}>
-            <h1>Добавить новый продукт</h1>
-            <div className={scss.inputText}>
-                <select onChange={handleChange}>
-                    {   
-                        products.map((item) => <option value={item.id} key={item.id}>{ item.name }</option>)
-                    }
-                </select>
-            </div>
-            {(count.isDirty && count.isEmpty) && <div style={{color: 'red'}}>Поле не может быть пустым</div>}
-            {(count.isDirty && count.minCountError) && <div style={{color: 'red'}}>Значение должно быть больше либо равно нулю</div>}
-            <div className={scss.inputText}>
-                <input onChange={e => count.onChange(e)} onBlur={e => count.onBlur(e)} value={count.value} type='number' name='count' placeholder='Количество'/>
-            </div>
-            <div className={scss.formButton}>
-                <button disabled={ !count.inputValid } onClick={() => handleClickAddProduct()}>
-                    Добавить
-                </button>
+        <div className={scss.modalWindow} onClick={(e) => handleCloseModalWindow(e)}>
+            <div className={scss.modalForm}>
+                <h1>Добавить новый продукт</h1>
+                <div className={scss.inputText}>
+                    <select onChange={handleChange}>
+                        {   
+                            products.map((item) => <option value={item.id} key={item.id}>{ item.name }</option>)
+                        }
+                    </select>
+                </div>
+                {(count.isDirty && count.isEmpty) && <div style={{color: 'red'}}>Поле не может быть пустым</div>}
+                {(count.isDirty && count.minCountError) && <div style={{color: 'red'}}>Значение должно быть больше либо равно нулю</div>}
+                <div className={scss.inputText}>
+                    <input onChange={e => count.onChange(e)} onBlur={e => count.onBlur(e)} value={count.value} type='number' name='count' placeholder='Количество'/>
+                </div>
+                <div className={scss.formButton}>
+                    <button disabled={ !count.inputValid } onClick={() => handleClickAddProduct()}>
+                        Добавить
+                    </button>
+                </div>
             </div>
         </div>
     )

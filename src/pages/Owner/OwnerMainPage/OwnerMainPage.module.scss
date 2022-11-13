@@ -1,8 +1,7 @@
 @import '../../../components/mixins.scss';
 
 .wrapper {
-    display: flex;
-    justify-content: space-between;
+    @include wrapper;
 
     .addNewFridge {
         margin: 150px auto;
@@ -12,55 +11,6 @@
         @include blueButton;
         width: 100px;
         height: 50px;
-    }
-
-    .modalWindow {
-        left: 0;
-        top: 0;
-        z-index: 1;
-        position: absolute;
-        width: 100%;
-        background: transparentize(#000000, 0.65);
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-        .modalForm {
-            background-color: #FFFFFF;
-            width: 556px;
-            height: 452px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-
-            .buttonsDeleteFridge {    
-                margin-top: 54px;
-                display: flex;
-                width: 250px;
-                justify-content: space-between;
-            }
-
-            .button_cancel {
-                margin-top: 10px
-            }
-
-            .table_rent {
-                font-size: 20px;
-                th, td {
-                    text-align: left;
-                    width: 170px
-                }
-            }
-
-            button {
-                @include blueButton;
-                width: 100px;
-                height: 40px;
-            }
-        }
     }
 
     .content_wrapper {
@@ -87,15 +37,8 @@
         }
 
         .table_fridge {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: "Montserrat";
-            background-color: #FFFF;
+            @include table_fridge;
 
-            td {
-                padding: 10px;
-            }
-            
             .actions {
                 display: flex;
                 justify-content: space-between;
@@ -113,12 +56,6 @@
                         font-size: 16px; // -
                     }      
                 }
-            }
-
-            th {
-                padding: 10px;
-                text-align: left;
-                font-size: 18px;    
             }
         }
     }

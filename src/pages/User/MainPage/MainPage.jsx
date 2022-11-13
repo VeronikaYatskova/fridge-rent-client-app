@@ -70,8 +70,8 @@ export const MainPage = () => {
                             <td>{item.producer}</td>
                             <td>{item.capacity}</td>
                             <td>{item.currentCount}</td>
-                            <td><Link to={`/user/${item.id}/product-list`}>Открыть</Link></td>
-                            <td><a onClick={() => handleClickReturn(item.id)}>Вернуть</a></td>
+                            <td><Link to={`/user/${item.id}/product-list`}><button>Открыть</button></Link></td>
+                            <td><button onClick={() => handleClickReturn(item.id)}>Вернуть</button></td>
                         </tr>)
                     }
                 </table>

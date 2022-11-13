@@ -64,10 +64,7 @@ export const OwnerMainPage = () => {
             onDelete && <DeleteFridge fridgeId={fridgeId} handleDelete={handleDelete}/>
         }
         {
-            newFridgeModalView && 
-            <div className={scss.modalWindow} onClick={(e) => handleCloseModal(e)}>
-                <AddFridge handleCloseModal={handleCloseModal}/>
-            </div>
+            newFridgeModalView && <AddFridge handleCloseModal={handleCloseModal}/>
         }
         <div className={scss.content_wrapper}>
             <div className={scss.title}>

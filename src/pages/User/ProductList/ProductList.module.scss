@@ -1,6 +1,8 @@
 @import '../../../components/mixins.scss';
 
 .wrapper {
+    @include wrapper;
+
     .title {
         margin: 10px 0 10px 0;
         display: flex;
@@ -8,9 +10,7 @@
         align-items: center;
 
         .text {
-            font-size: 26px;
-            font-weight: 700;
-            margin-left: 100px
+           @include text;
         }
 
         .addProductButton {
@@ -19,52 +19,8 @@
         }
     }
 
-    .modalWindow {
-        left: 0;
-        top: 0;
-        z-index: 1;
-        position: absolute;
-        width: 100%;
-        background: transparentize(#000000, 0.65);
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-        .modalForm {
-            background-color: #FFFFFF;
-            width: 556px;
-            height: 250px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-
-            .buttons {
-                margin-top: 54px;
-                display: flex;
-                width: 474px;
-                justify-content: space-between;
-                
-                button {
-                    @include blueButton;
-                    width: 164px;
-                    height: 65px;
-                }
-            }
-        }
-    }
-
     .table_fridge {
-        width: 100%;
-        border-collapse: collapse;
-        font-family: "Montserrat";
-        background-color: #FFFF;
-
-        td {
-            padding: 10px;
-        }
+        @include table_fridge;
         
         .actions {
             display: flex;
@@ -84,12 +40,6 @@
                     font-size: 16px;
                 }      
             }
-        }
-
-        th {
-            padding: 10px;
-            text-align: left;
-            font-size: 18px;    
         }
     }
 }

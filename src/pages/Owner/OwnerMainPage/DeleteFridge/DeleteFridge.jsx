@@ -15,7 +15,7 @@ export const DeleteFridge = ({ fridgeId, handleDelete }) => {
 
     return (<div className={scss.modalWindow} onClick={(e) => handleDelete(e)}>
         <div className={scss.modalForm}>
-            <div>Вы уверены?</div>
+            <h1>Вы уверены?</h1>
             <div className={scss.buttons}>
                 <button onClick={() => handleFridgeDelete()}>Да</button>
                 <button onClick={(e) => handleDelete(e)}>Отмена</button>

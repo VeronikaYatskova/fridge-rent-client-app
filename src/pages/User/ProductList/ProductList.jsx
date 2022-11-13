@@ -87,22 +87,13 @@ export const ProductList = () => {
             </tbody>
         </table>
         {
-            newProductModalView && 
-            <div className={scss.modalWindow} onClick={(e) => handleCloseModalWindow(e)}>
-                <AddProduct/>
-            </div> 
+            newProductModalView && <AddProduct handleCloseModalWindow={handleCloseModalWindow}/>
         }
         {
-            editProductModalView &&
-            <div className={scss.modalWindow} onClick={(e) => handleCloseModalWindow(e)}>
-                <EditProduct fridgeId={fridgeGuid} productId={productId}/>
-            </div> 
+            editProductModalView && <EditProduct fridgeId={fridgeGuid} productId={productId} handleCloseModalWindow={handleCloseModalWindow}/>    
         }
         {
-            deleteProductModalView &&
-            <div className={scss.modalWindow} onClick={(e) => handleCloseModalWindow(e)}>
-                <DeleteProduct fridgeGuid={fridgeGuid} selectedProduct={selectedProduct} setDeleteProductModalView={setDeleteProductModalView} handleCloseModalWindow={handleCloseModalWindow}/>
-            </div>
+            deleteProductModalView && <DeleteProduct fridgeGuid={fridgeGuid} selectedProduct={selectedProduct} setDeleteProductModalView={setDeleteProductModalView} handleCloseModalWindow={handleCloseModalWindow}/>
         }
     </div> 
     )

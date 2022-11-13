@@ -14,11 +14,13 @@ export const DeleteProduct = ({ fridgeGuid,  selectedProduct, setDeleteProductMo
         setDeleteProductModalView(false);
     }
 
-    return (<div className={scss.modalForm}>
-                <div>Вы уверены?</div>
-                <div className={scss.buttons}>
-                    <button onClick={() => handleProductDelete()}>Да</button>
-                    <button onClick={(e) => handleCloseModalWindow(e)}>Отмена</button>
+    return (<div className={scss.modalWindow} onClick={(e) => handleCloseModalWindow(e)}>
+                <div className={scss.modalForm}>
+                    <h1>Вы уверены?</h1>
+                    <div className={scss.buttons}>
+                        <button onClick={() => handleProductDelete()}>Да</button>
+                        <button onClick={(e) => handleCloseModalWindow(e)}>Отмена</button>
+                    </div>
                 </div>
             </div>);
 }

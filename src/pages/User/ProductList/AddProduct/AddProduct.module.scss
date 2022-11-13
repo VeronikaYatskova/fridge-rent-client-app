@@ -1,51 +1,61 @@
 @import '../../../../components/mixins.scss';
 
 
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 500px;
-    height: 350px;
-    background-color: #FFFFFF;
+.modalWindow {
+    @include modalWindow;
+    
+    .modalForm {
+        @include modalForm;
 
-    .inputText {
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        background: #D3D3D3;
-        border-radius: 5px;
-        width: 470px;
-        height: 48px;
-
-        input, select {
-            margin-left: 14px;
-            background:  transparent;
-            border: none;
-            outline: none;
-            width: 440px;
-
-            @include fontStyle;
-            font-weight: 400;
-            font-size: 20px;
-            line-height: 20px;
-            display: flex;
-            color: #000000;    
+        width: 556px;
+        height: 260px;
+        
+        .buttons {
+            @include buttons;
+            button {
+                @include blueButton;
+                width: 130px;
+                height: 40px;
+            }
         }
     }
+}
 
-    .formButton {
-        margin-top: 14px;
-        width: 100px;
+.inputText {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    background: #D3D3D3;
+    border-radius: 5px;
+    width: 470px;
+    height: 48px;
+
+    input, select {
+        margin-left: 14px;
+        background:  transparent;
+        border: none;
+        outline: none;
+        width: 440px;
+
+        @include fontStyle;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 20px;
         display: flex;
+        color: #000000;    
+    }
+}
 
-        button {
-            width: 180px;
-            height: 54px;
+.formButton {
+    margin-top: 14px;
+    width: 100px;
+    display: flex;
 
-            @include blueButton;
-            font-size: 20px;   
-        }
+    button {
+        width: 180px;
+        height: 48px;
 
+        @include blueButton;
+        font-size: 20px;   
     }
 }

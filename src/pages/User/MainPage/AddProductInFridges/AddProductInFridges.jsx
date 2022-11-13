@@ -25,7 +25,7 @@ export const AddProductInFridges = ({handleptaClickClose, setProductToAdd}) => {
     return (
         <div className={scss.modalWindow} onClick={(e) => handleptaClickClose(e)}>
             <div className={scss.modalForm}>
-                <div>Выберите продукт</div>
+                <div className={scss.text}>Выберите продукт</div>
                 <div className={scss.inputText}>
                     <select onChange={handleChange}>
                         {   
