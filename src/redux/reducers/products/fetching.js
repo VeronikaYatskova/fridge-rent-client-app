@@ -5,7 +5,7 @@ import { createGetAllProductsAction } from "../../actions";
 
 export function fetchAllProducts({token}, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }products`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }products/all-products`;
 
     return async (dispatch) => {
         try {
