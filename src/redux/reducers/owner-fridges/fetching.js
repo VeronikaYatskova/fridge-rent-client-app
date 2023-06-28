@@ -1,20 +1,20 @@
 import axios from 'axios';
 
 import environment from '../../../env';
-import { createGetOwnersFridgesAction, createGetFridgeRentInfoAction, createRemoveFridgeAction } from "../../actions";
+import { createGetOwnersFridgesAction, createRemoveFridgeAction } from "../../actions";
 
 export function fetchRemoveFridge({token, fridgeId}, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }owner/fridge/${fridgeId}/remove`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges/${fridgeId}`;
 
     return async (dispatch) => {
         try {
             console.log(token, fridgeId);
-            const {data} = await axios.delete(path,{
+            const {data} = await axios.delete(path, {
                 headers: { Authorization: `bearer ${token}` }                
             })
 
-            dispatch(createRemoveFridgeAction({id: fridgeId}));
+            dispatch(createRemoveFridgeAction(fridgeId));
 
             if (successCallback) {
                 successCallback();
@@ -29,7 +29,7 @@ export function fetchRemoveFridge({token, fridgeId}, errorCallback, successCallb
 
 export function fetchAddFridge({token, modelId, producerId, capacity}, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }owner/fridge/add`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges`;
 
     return async (dispatch) => {
         try {
@@ -55,7 +55,7 @@ export function fetchAddFridge({token, modelId, producerId, capacity}, errorCall
 
 export function fetchAllOwnerFridges({token}, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }owner/fridges`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges`;
 
     return async (dispatch) => {
         try {
@@ -76,27 +76,3 @@ export function fetchAllOwnerFridges({token}, errorCallback, successCallback) {
         }
     }
 }
-
-export function fetchFridgeRentInfo({token, fridgeId}, errorCallback, successCallback) {
-    const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }owner/fridge/${fridgeId}/rent-info`;
-
-    return async (dispatch) => {
-        try {
-            const {data} = await axios.get(path, {
-                headers: { Authorization: `bearer ${token}` }                
-            })
-
-            dispatch(createGetFridgeRentInfoAction(data));
-
-            if (successCallback) {
-                successCallback();
-            }
-        } catch (error) {
-            if (errorCallback) {
-                errorCallback('Ошибка');
-            }
-        }
-    }
-}
-

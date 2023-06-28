@@ -8,11 +8,12 @@ import { createSetFridgesAction,
          createReturnFridgeAction,
          createDeleteProductAction,
          createRentFridgeAction,
+         createAddProductInFridgeAction,
          } from "../../actions";
 
 export function fetchProductUpdate({token, fridgeId, productId, count}, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }products-in-fridge/product/update`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges/${fridgeId}/products/${productId}`;
 
     return async (dispatch) => {
         try {
@@ -42,11 +43,11 @@ export function fetchProductUpdate({token, fridgeId, productId, count}, errorCal
 
 export function fetchReturnFridge({token, fridgeId}, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }rent/fridge/${fridgeId}/return`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }${fridgeId}/free`;
 
     return async (dispatch) => {
         try {
-            const {data} = await axios.delete(path,{
+            const {data} = await axios.delete(path, {
                 headers: { Authorization: `bearer ${token}` }                
             })
 
@@ -65,7 +66,7 @@ export function fetchReturnFridge({token, fridgeId}, errorCallback, successCallb
 
 export function fetchRemoveProductFromFridge({token, fridgeId, productId}, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }products-in-fridge/${fridgeId}/${productId}`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges/${fridgeId}/products/${productId}`;
 
     return async (dispatch) => {
         try {
@@ -88,7 +89,7 @@ export function fetchRemoveProductFromFridge({token, fridgeId, productId}, error
 
 export function fetchAllUserFridges({ token }, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }rent/fridges/rented`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges`;
 
     return async (dispatch) => {
         try {
@@ -111,7 +112,7 @@ export function fetchAllUserFridges({ token }, errorCallback, successCallback) {
 
 export function fetchAvailableFridges({ token }, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges/available-fridges`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges/available`;
 
     return async (dispatch) => {
         try {
@@ -134,7 +135,7 @@ export function fetchAvailableFridges({ token }, errorCallback, successCallback)
 
 export function fetchProductsInFridge({ token, fridgeId }, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }products-in-fridge/fridge/${fridgeId}`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges/${fridgeId}/products`;
 
     return async (dispatch) => {
         try {
@@ -158,7 +159,7 @@ export function fetchProductsInFridge({ token, fridgeId }, errorCallback, succes
 
 export function fetchStoredProcedureAddProductToFridges({ token, productId }, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }products-in-fridge/product/${productId}/put-in-all-fridges`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges/products/${productId}`;
 
     return async (dispatch) => {
         try {
@@ -180,18 +181,16 @@ export function fetchStoredProcedureAddProductToFridges({ token, productId }, er
 
 export function fetchAddProductToFridge({token, fridgeId, productId ,count}, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }products-in-fridge/product/new`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges/${fridgeId}/products/${productId}`;
 
     return async (dispatch) => {
         try {
 
-            const { data } = await axios.post(path, {
-                productId,
-                fridgeId,
-                count: Number(count)
-            },{
+            const { data } = await axios.post(path, {count: Number(count)},{
                 headers: { Authorization: `bearer ${token}` }                
             })
+            
+            dispatch(createAddProductInFridgeAction({ fridgeId, productId, count }))
 
             if (successCallback) {
                 successCallback();
@@ -207,11 +206,11 @@ export function fetchAddProductToFridge({token, fridgeId, productId ,count}, err
 export function fetchRentFridge({token, fridgeId}, errorCallback, successCallback) {
     console.log({ token, fridgeId })
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }rent/fridge/${fridgeId}/rent`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges/${fridgeId}/rent`;
 
     return async (dispatch) => {
         try {
-            const {data} = await axios.post(path,{}, {
+            const {data} = await axios.put(path, null, {
                 headers: { Authorization: `bearer ${token}` }                
             })
 

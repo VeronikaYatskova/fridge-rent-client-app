@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
-import { EditProduct } from './EditProduct';
 import { AddProduct } from './AddProduct';
 import { DeleteProduct } from './DeleteProduct';
 
@@ -79,7 +78,6 @@ export const ProductList = () => {
                             {item.count}
                             <div className={scss.buttons}>
                                 <button onClick={() => handleOpenModalDeleteProduct(item.id)}>Удалить</button>
-                                <button onClick={() => handleOpenModalEditProduct(item.id)}>Редактировать</button>
                             </div>
                         </td>
                     </tr>)
@@ -88,10 +86,7 @@ export const ProductList = () => {
         </table>
         {
             newProductModalView && <AddProduct handleCloseModalWindow={handleCloseModalWindow}/>
-        }
-        {
-            editProductModalView && <EditProduct fridgeId={fridgeGuid} productId={productId} handleCloseModalWindow={handleCloseModalWindow}/>    
-        }
+        } 
         {
             deleteProductModalView && <DeleteProduct fridgeGuid={fridgeGuid} selectedProduct={selectedProduct} setDeleteProductModalView={setDeleteProductModalView} handleCloseModalWindow={handleCloseModalWindow}/>
         }

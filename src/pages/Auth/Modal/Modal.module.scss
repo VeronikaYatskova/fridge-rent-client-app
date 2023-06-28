@@ -1,0 +1,45 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 450px;
+  height: 450px;
+  margin-top: 20px;
+  background: rgb(201, 227, 233);
+  position: absolute;
+  z-index: 5;
+  border-radius: 16px;
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    button {
+      outline: none;
+      border: none;
+      width: 200px;
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-weight: 500;
+    }
+  }
+
+  h4 {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+
+  .button {
+    outline: none;
+    border: none;
+    width: 200px;
+    margin-bottom: 10px;
+    background: white;
+    color: #05386B;
+  }
+}

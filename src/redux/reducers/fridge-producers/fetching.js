@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 import environment from '../../../env';
-import { createGetModelsAction } from "../../actions";
+import { createGetProducersAction } from "../../actions";
 
 export function fetchAllProducers({token}, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges/available-producers`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges/producers`;
 
     return async (dispatch) => {
         try {
@@ -13,7 +13,7 @@ export function fetchAllProducers({token}, errorCallback, successCallback) {
                 headers: { Authorization: `bearer ${token}` }                
             })
 
-            dispatch(createGetModelsAction(data));
+            dispatch(createGetProducersAction(data));
 
             if (successCallback) {
                 successCallback();

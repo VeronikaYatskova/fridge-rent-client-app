@@ -1,6 +1,8 @@
-const LOGIN = Symbol.for('LOGIN');
-const REGISTRATION = Symbol.for('REGISTRATION');
-const SIGNOUT = Symbol.for('SIGNOUT');
+const LOGIN = 'LOGIN';
+const REGISTRATION = 'REGISTRATION';
+const SIGNOUT = 'SIGNOUT';
+const GOOGLEREGISTRATION = 'GOOGLEREGISTRATION'; 
+const VKREGISTRATION = 'VKREGISTRATION';
 
 const createLoginAction = (payload = { email: 'joe', isOwner: false }) => {
     return {
@@ -22,13 +24,31 @@ const createSignOutAction = () => {
     }
 }
 
+const createGoogleRegistrationAction = (payload = {code: '', isOwner: false }) => {
+    return {
+        payload,
+        type: GOOGLEREGISTRATION
+    }
+}
+
+const createVkRegistrationAction = (payload) => {
+    return {
+        payload,
+        type: VKREGISTRATION
+    }
+}
+
 
 
 export {
     LOGIN,
     REGISTRATION,
     SIGNOUT,
+    GOOGLEREGISTRATION,
+    VKREGISTRATION,
     createLoginAction,
     createSignOutAction,
-    createRegistrationAction
+    createRegistrationAction,
+    createGoogleRegistrationAction,
+    createVkRegistrationAction
 }

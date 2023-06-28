@@ -12,6 +12,10 @@
         margin-left: 26px;
     }
 
+    a {
+        text-decoration: none;
+    }
+
     .navigations {
         display: flex;
         align-items: center;
@@ -20,14 +24,28 @@
 
         width: 150px;
         
-        .signin {
-            width: 36px;
-            height: 34px; 
-        }
+        .buttons {
+            display: flex;
+            
+            .buttonwrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-left: 10px;
 
-        .signout {
-            width: 36px;
-            height: 34px; 
+                width: 200px;
+                height: 34px; 
+
+                border: 1px solid white;
+                border-radius: 10px;
+            }
+
+            .text {
+                border-bottom-style: none;
+                text-decoration: none;
+                color: white;
+                font-weight: 500;
+            }
         }
 
         .account {
@@ -48,4 +66,5 @@
             height: 50px; 
         }
     }
+
 }

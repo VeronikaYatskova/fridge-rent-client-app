@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
 
-import { Auth, Main, ProductList, MainPage, About, OwnerMainPage, NotFound } from './pages';
+import { Main, ProductList, MainPage, About, OwnerMainPage, NotFound, SignInForm, SignUpForm } from './pages';
 
 import scss from './App.module.scss';
 import { Layout, OwnerRoleAuth, PushMessagesProvider, RenterRoleAuth, RequireAuth } from './hoc';
@@ -13,7 +13,10 @@ export const App = () => {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route path='/' element={<Main />}/>
-            <Route path='/auth' element={<Auth />}/>
+            <Route path='/auth/sign-up' element={<SignUpForm />}/>
+            <Route path='/auth/sign-in' element={<SignInForm />}/>
+            <Route path='/auth/vk/sign-in' element={<SignInForm />}/>
+            <Route path='/auth/google/sign-in' element={<SignInForm />}/>
             <Route path='/about' element={<About />}/>
             <Route to="/" element={<RequireAuth/>}>
               <Route path='/' element={<RenterRoleAuth />}>

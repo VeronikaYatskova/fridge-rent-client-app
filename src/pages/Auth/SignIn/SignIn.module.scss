@@ -1,11 +1,18 @@
 .wrapper {
     background: #FFFFFF;
     width: 592px;
-    height: 304px;
+    height: 500px;
     display: flex;
     border-radius: 16px;
     flex-direction: column;
     align-items: center;
+    margin: 0;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    position: absolute;
+    margin-top: 150px;
+    margin-left: 460px;
 
     .inputText {
         display: flex;
@@ -36,24 +43,25 @@
         width: 439px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-
-        button {
-            background: #05386B;
-            border-radius: 10px;
-            width: 180.11px;
-            height: 53px;
-
-            font-family: 'Montserrat';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 20px;
-            line-height: 24px;
-            color: #FFFFFF;
-        }
+        justify-content: center;
 
         .owner {
             display: flex;
         }
+    }
+
+    button {
+        background: #05386B;
+        border-radius: 10px;
+        width: 180.11px;
+        height: 53px;
+
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 24px;
+        color: #FFFFFF;
+        margin-bottom: 5px;
     }
 }

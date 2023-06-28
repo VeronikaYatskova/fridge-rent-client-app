@@ -1,10 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { useDispatch } from 'react-redux';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {Link, useLocation, useMatch, useNavigate, useSearchParams} from 'react-router-dom';
 import { PushMessagesContext } from '../../../contexts';
 import { useAuth } from '../../../hooks';
 import { fetchLoginUser } from '../../../redux';
 import scss from './SignIn.module.scss';
+import {Modal} from '../Modal';
 
 const useValidation = (value, validations) => {
     const [isEmpty, setEmpty] = useState(true);
@@ -28,6 +29,8 @@ const useValidation = (value, validations) => {
                     } else {
                         setEmail(false);
                     }
+                    break;
+                default:
                     break;
            }
        }
@@ -72,7 +75,6 @@ const useInput = (initialValue, validations) => {
 }
 
 export const SignInForm = () => {
-
     const dispath = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -82,9 +84,11 @@ export const SignInForm = () => {
     const email = useInput('', {isEmpty: true, isEmail: false});
     const password = useInput('', {isEmpty: true, minLength: 1});
     const [isOwner, setOwner] = useState(false);
-    
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [code, setCode] = useState('');
+    const [provider, setProvider] = useState('');
+
     const login = async () => {
-        console.log(isOwner)
         await dispath(fetchLoginUser({ email: email.value, password: password.value, isOwner }, (message) => {
             pushMessagesContext.addPushMessage({
                 message,
@@ -95,6 +99,36 @@ export const SignInForm = () => {
             const href = location.state?.from?.pathname || '/';
             navigate(href, { replace: true });
         }));
+    }
+
+    useEffect(() => {
+        const isVk = location.pathname.includes('auth/vk/sign-in');
+
+        if (isVk) {
+            setProvider('vk');
+        } else {
+            setProvider('google');
+        }
+    }, [])
+
+    useEffect(() => {
+        setCode(searchParams.get('code'));
+        setSearchParams(new URLSearchParams(searchParams));
+    }, [searchParams])
+
+    const onGoogleSignInClick = () => {
+        const clientID = '639600741914-7g2vu5dkj7n3fhm9adc1v8e9nrc42qt3.apps.googleusercontent.com';
+        const redirect_uri = 'http://localhost:3000/auth/google/sign-in';
+        const scopes = ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile'];
+        
+        window.location.href = `https://accounts.google.com/o/oauth2/auth?client_id=${clientID}&redirect_uri=${redirect_uri}&access_type=offline&response_type=code&scope=${scopes.join(' ')}`
+    }
+
+    const onVKSignInClick = () => {
+        const clientID = '51627238';
+        const redirect_uri = 'http://localhost:3000/auth/vk/sign-in';        
+
+        window.location.href = `https://oauth.vk.com/authorize?client_id=${clientID}&display=page&redirect_uri=${redirect_uri}&scope=email&response_type=code&v=5.131&state=123456`
     }
 
     return (<div className={ scss.wrapper }>
@@ -114,10 +148,14 @@ export const SignInForm = () => {
             <div>
                 <button disabled={!email.inputValid || !password.inputValid} onClick={() => login()}>Войти</button>
             </div>
-            <div className={scss.owner}>
-                <div>владелец</div>
-                <input value={isOwner} onChange={ () => setOwner((currentOwner) => !currentOwner) }  type="checkbox"/>
-            </div>
         </div>
+        <div>
+            <h3>Войти через:</h3>
+        </div>
+        <button onClick={onGoogleSignInClick}>Google</button>
+        <button onClick={onVKSignInClick}>VK</button>
+        {
+            code && <Modal code={code} provider={provider}/>
+        }
     </div>)
 }

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import scss from './OwnerMainPage.module.scss';
 
 import {AddFridge} from './AddFridge';
-import { RentInfo } from './RentInfo/RentInfo';
 import { DeleteFridge } from './DeleteFridge';
 
 import { fetchAllOwnerFridges } from '../../../redux';
@@ -58,9 +57,6 @@ export const OwnerMainPage = () => {
 
     return (<div className={scss.wrapper}>
         {
-            isOpened && <RentInfo fridgeId={fridgeId} handleClose={handleClose} />
-        }
-        {
             onDelete && <DeleteFridge fridgeId={fridgeId} handleDelete={handleDelete}/>
         }
         {
@@ -76,7 +72,6 @@ export const OwnerMainPage = () => {
                     <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Модель</th>
-                    <th scope="col">Статус</th>
                     <th></th>
                     </tr>
                 </thead>
@@ -88,9 +83,7 @@ export const OwnerMainPage = () => {
                         </th>
                         <td>{item.model}</td>
                         <td className={scss.actions}>                             
-                            <div>{item.isRented ? 'Арендован': 'Свободен'}</div>
                             <div className={scss.buttons}>
-                                <button onClick={() => handleReturn(item.id)} disabled={!item.isRented} style={{ opacity: !item.isRented ? '60%': '100%' }}>Детали</button>
                                 <button onClick={() => handleReturnDelete(item.id)} disabled={item.isRented} style={{ opacity: item.isRented ? '60%': '100%' }}>Удалить</button>
                             </div>
                         </td>

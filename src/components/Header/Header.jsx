@@ -21,9 +21,6 @@ export const Header = () => {
             <SvgSelector name="Logo" />
         </Link>
         <div className={ scss.navigations }>
-            <Link to='/about' className={scss.about}>
-                <SvgSelector name="About"/>
-            </Link>
             {
                 user && <Link to={ user.isOwner ? '/owner': '/user' } className={scss.account}>
                     <SvgSelector name="Account"/>    
@@ -34,11 +31,22 @@ export const Header = () => {
                     <SvgSelector name="SignIn"/>
                 </div>
             }
+            <div className={scss.buttons}>
             {
-                !user && <Link to='/auth' className={ scss.signin }>
-                    <SvgSelector name="SignIn"/>
+                !user && <Link to='/auth/sign-up' className={scss.signin}>
+                    <div className={scss.buttonwrapper}>
+                        <p className={scss.text}>Добавить владельца</p>
+                    </div>  
+                </Link> 
+            }
+            {
+                !user && <Link to='/auth/sign-in' className={scss.addrenter}>
+                    <div className={scss.buttonwrapper}>
+                        <p className={scss.text}>Войти</p>
+                    </div>
                 </Link>
             }
+            </div>
         </div>
     </header>)
 }

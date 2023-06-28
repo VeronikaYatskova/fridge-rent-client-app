@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import {Link, useLocation, useNavigate} from 'react-router-dom'
 import { PushMessagesContext } from '../../../contexts';
 import { fetchRegistrationUser } from '../../../redux';
+
 import scss from './SignUp.module.scss'
 
 const useValidation = (value, validations) => {
@@ -75,7 +76,6 @@ const useInput = (initialValue, validations) => {
     }
 }
 
-
 export const SignUpForm = () => {
 
     const dispatch = useDispatch();
@@ -85,12 +85,9 @@ export const SignUpForm = () => {
 
     const email = useInput('', {isEmpty: true, isEmail: false});
     const password = useInput('', {isEmpty: true, minLength: 1});
-    const name = useInput('', {isEmpty: true});
-    const phone = useInput('', {isEmpty:true, maxLength: 60});
-    const [asOwner, setAsOwner] = useState(false);
 
     const register = () => {
-        dispatch(fetchRegistrationUser({ email: email.value, password: password.value, isOwner: asOwner, name: name.value, phone: phone.value },
+        dispatch(fetchRegistrationUser({ email: email.value, password: password.value, isOwner: true },
             (message) => {
                 pushMessagesContext.addPushMessage({
                     message,
@@ -105,13 +102,10 @@ export const SignUpForm = () => {
         ))
     }
 
-    const changeAsOwner = () => {
-        setAsOwner((currentValue) => !currentValue);
-    }
-
     return (<div className={ scss.wrapper }>
-        <div>
+        <div className={scss.title}>
             <h1>Создать аккаунт</h1>
+            <h1>владельца</h1>
         </div>
         {(email.isDirty && email.isEmpty) && <div style={{color: 'red'}}>Поле не может быть пустым</div>}
         {(email.isDirty && email.isEmail) && <div style={{color: 'red'}}>Поле введено не правильно</div>}
@@ -122,29 +116,11 @@ export const SignUpForm = () => {
         <div className={scss.inputText} style={{ marginTop: '14px' }}>
             <input onChange={e => password.onChange(e)} onBlur={e => password.onBlur(e)} value={password.value} type='password' name='password' placeholder='Пароль' />
         </div>
-        {
-            asOwner && (
-                [
-                (name.isDirty && name.isEmpty) && <div style={{color: 'red'}}>Поле не может быть пустым</div>,
-                <div className={scss.inputText} style={{ marginTop: '14px' }}>
-                    <input onChange={e => name.onChange(e)} onBlur={e => name.onBlur(e)} value={name.value} type='text' name='name' placeholder='Имя' />
-                </div>,
-                (phone.isDirty && phone.isEmpty) && <div style={{color: 'red'}}>Поле не может быть пустым</div>,
-                (phone.isDirty && phone.maxLengthError) && <div style={{color: 'red'}}>Поле превысило допустимое число символов</div>,
-                <div className={scss.inputText} style={{ marginTop: '14px' }}>
-                    <input onChange={e => phone.onChange(e)} onBlur={e => phone.onBlur(e)} value={phone.value} type='text' name='phone' placeholder='Телефон' />
-                </div>]
-            )
-        }
         <div className={ scss.formButton }>
             <div onClick={() => register()}>
                 <Link to='/user'>
-                    <button disabled={ asOwner?  (!email.inputValid || !password.inputValid || !name.inputValid || !phone.inputValid): (!email.inputValid || !password.inputValid)}>Создать</button>
+                    <button disabled={!email.inputValid || !password.inputValid}>Создать</button>
                 </Link>
-            </div>
-            <div className={scss.owner}>
-                <div>владелец</div>
-                <input value={asOwner} onChange={() => changeAsOwner()} type="checkbox"/>
             </div>
         </div>
     </div>

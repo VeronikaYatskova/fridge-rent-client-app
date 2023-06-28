@@ -5,7 +5,7 @@ import { createGetModelsAction } from "../../actions";
 
 export function fetchAllModels({token}, errorCallback, successCallback) {
     const { host, port, prefix, protocol } = environment;
-    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges/available-models`;
+    const path = `${protocol}://${host}:${port}/${prefix ? prefix + '/': '' }fridges/models`;
 
     return async (dispatch) => {
         try {
